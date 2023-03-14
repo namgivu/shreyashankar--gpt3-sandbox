@@ -19,7 +19,10 @@ def demo_web_app(gpt, config=UIConfig()):
     app = Flask(__name__)
 
     app.config.from_envvar(CONFIG_VAR)
+    #                     (envvar that point to configfile openai.cfg
+
     set_openai_key(app.config[KEY_NAME])
+    #             (           KEY_NAME openai secret defined in openai.cfg at this key/envvar/varname)
 
     @app.route("/params", methods=["GET"])
     def get_params():
