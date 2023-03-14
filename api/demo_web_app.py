@@ -17,11 +17,13 @@ def demo_web_app(gpt, config=UIConfig()):
     """Creates Flask app to serve the React app."""
     app = Flask(__name__)
 
+    #region set openai secret
     app.config.from_envvar(CONFIG_VAR)
     #                     (envvar that point to configfile openai.cfg
 
     set_openai_key(app.config[KEY_NAME])
     #             (           KEY_NAME openai secret defined in openai.cfg at this key/envvar/varname)
+    #endregion set openai secret
 
     @app.route("/params", methods=["GET"])
     def get_params():
@@ -31,6 +33,9 @@ def demo_web_app(gpt, config=UIConfig()):
 
     def error(err_msg, status_code):
         return Response(json.dumps({"error": err_msg}), status=status_code)
+
+
+    #region /examples CRUD
 
     def get_example(example_id):
         """Gets a single example or all the examples."""
@@ -75,15 +80,8 @@ def demo_web_app(gpt, config=UIConfig()):
         gpt.delete_example(example_id)
         return json.dumps(gpt.get_all_examples())
 
-    @app.route(
-        "/examples",
-        methods=["GET", "POST"],
-        defaults={"example_id": ""},
-    )
-    @app.route(
-        "/examples/<example_id>",
-        methods=["GET", "PUT", "DELETE"],
-    )
+    @app.route('/examples',              methods=['GET', 'POST'],         defaults={'example_id': ''} )
+    @app.route('/examples/<example_id>', methods=['GET', 'PUT', 'DELETE']                             )
     def examples(example_id):
         method = request.method
         args = request.json
@@ -97,7 +95,10 @@ def demo_web_app(gpt, config=UIConfig()):
             return delete_example(example_id)
         return error("Not implemented", HTTPStatus.NOT_IMPLEMENTED)
 
-    @app.route("/translate", methods=["GET", "POST"])
+    #endregion /examples CRUD
+
+
+    @app.route('/translate', methods=['GET', 'POST'])
     def translate():
         # pylint: disable=unused-variable
         prompt = request.json["prompt"]
@@ -108,4 +109,5 @@ def demo_web_app(gpt, config=UIConfig()):
         return {'text': response['choices'][0]['text'][offset:]}
 
     subprocess.Popen(["yarn", "start"])
+
     app.run()
