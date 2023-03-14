@@ -70,6 +70,7 @@ class GPT:
         self.append_output_prefix_to_query = append_output_prefix_to_query
         self.stop                          = (output_suffix + input_prefix).strip()
 
+    #region example CRUD
     def add_example(self, ex):
         """Adds an example to the object.
 
@@ -90,6 +91,7 @@ class GPT:
     def get_all_examples(self):
         """Returns all examples as a list of dicts."""
         return {k: v.as_dict() for k, v in self.examples.items()}
+    #endregion example CRUD
 
     def get_engine(self):
         """Returns the engine specified for the API."""
