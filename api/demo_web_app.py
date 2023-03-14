@@ -88,15 +88,13 @@ def demo_web_app(gpt, config=UIConfig()):
     @app.route('/examples/<example_id>', methods=['GET', 'PUT', 'DELETE']                             )
     def examples(example_id):
         method = request.method
-        args = request.json
-        if method == "GET":
-            return get_example(example_id)
-        if method == "POST":
-            return post_example()
-        if method == "PUT":
-            return put_example(args, example_id)
-        if method == "DELETE":
-            return delete_example(example_id)
+        args   = request.json
+
+        if method == "GET":    return get_example(example_id)
+        if method == "POST":   return post_example()
+        if method == "PUT":    return put_example(args, example_id)
+        if method == "DELETE": return delete_example(example_id)
+
         return error("Not implemented", HTTPStatus.NOT_IMPLEMENTED)
 
     #endregion /examples CRUD
