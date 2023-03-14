@@ -64,3 +64,6 @@ FIXME progress now
 Traceback (most recent call last):
   File "/home/namgivu/code/l/gpt3_sql/shreyashankar--gpt3-sandbox/.venv/lib/python3.9/site-packages/flask/app.py", line 2528, in wsgi_app
     response = self.full_dispatch_request()
+
+--- about sample examples/run_latex_app.py
+in docstring in the code

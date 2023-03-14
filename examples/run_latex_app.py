@@ -15,7 +15,13 @@ mainpoint is list of Example obj w/ inp+out pair
 then, final goal is to call 
 #   = openai ie a py pkg
 res = openai.Completion.create(engine, prompt, ...finetune_params)
-#   =                                  prompt ie plain text fr input@webapp
+#   =                         (        prompt ie plain text fr input@webapp
+#   =                         (engine ie :codehere. gpt.engine
+
+--- sumup
+use :openai ie an OpenAI's py pkg
+to call to OpenAI API endpoint w/  chosen :engine, :engine_params, training/priming example inp+out pairs 
+to have output text fr input :prompt plaintext
 '''
 gpt = GPT(engine='davinci', temperature=0.5, max_tokens=100)
 
