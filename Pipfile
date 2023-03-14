@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+astroid = "*" 
+certifi = "*"
+chardet = "*"
+click = "*"
+flask = "*"
+idna = "*"
+itsdangerous = "*"
+jinja2 = "*"
+markupsafe = "*"
+openai = "*"
+pylint = "*"
+python-dotenv = "*"
+requests = "*"
+six = "*"
+urllib3 = "*"
+werkzeug = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
