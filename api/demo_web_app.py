@@ -31,11 +31,12 @@ def demo_web_app(gpt, config=UIConfig()):
         response = config.json()
         return response
 
+
+    #region /examples CRUD
     def error(err_msg, status_code):
         return Response(json.dumps({"error": err_msg}), status=status_code)
 
-
-    #region /examples CRUD
+    ###
 
     def get_example(example_id):
         """Gets a single example or all the examples."""
