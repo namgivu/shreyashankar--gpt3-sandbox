@@ -8,9 +8,7 @@ import sys; sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__f
 
 
 # Construct GPT object and show some examples
-gpt = GPT(engine="davinci",
-          temperature=0.5,
-          max_tokens=100)
+gpt = GPT(engine='davinci', temperature=0.5, max_tokens=100)
 
 gpt.add_example(Example('Two plus two equals four', '2 + 2 = 4'))
 gpt.add_example(
@@ -28,8 +26,8 @@ gpt.add_example(Example('f of n equals 1 over (b-a) if n is 0 otherwise 5',
                         'f(n) = \\begin{cases} 1/(b-a) &\\mbox{if } n \\equiv 0 \\\ # 5 \\end{cases}'))
 
 # Define UI configuration
-config = UIConfig(description="Text to equation",
-                  button_text="Translate",
-                  placeholder="x squared plus 2 times x")
+config = UIConfig(description='Text to equation',
+                  button_text='Translate',
+                  placeholder='x squared plus 2 times x')
 
 demo_web_app(gpt, config)
