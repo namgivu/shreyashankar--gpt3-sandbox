@@ -1,9 +1,10 @@
 import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 from api import GPT, Example, UIConfig
 from api import demo_web_app
+
+# add gitcloned dir to PYTHONPATH
+import sys; sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 
 # Construct GPT object and show some examples
