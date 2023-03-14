@@ -56,7 +56,7 @@ class GPT:
 
         append_output_prefix_to_query = False,
     ):
-        self.examples                      = {}
+        self.examples                      = {}  # {ex_id: ex_d}
         self.engine                        = engine
         self.temperature                   = temperature
         self.max_tokens                    = max_tokens
@@ -91,11 +91,6 @@ class GPT:
         """Returns all examples as a list of dicts."""
         return {k: v.as_dict() for k, v in self.examples.items()}
 
-    def get_prime_text(self):
-        """Formats all examples to prime the model."""
-        return "".join(
-            [self.format_example(ex) for ex in self.examples.values()])
-
     def get_engine(self):
         """Returns the engine specified for the API."""
         return self.engine
@@ -108,12 +103,38 @@ class GPT:
         """Returns the max tokens specified for the API."""
         return self.max_tokens
 
+    #region handle new gpt request
+    '''
+    enduser have a new :prompt plaintext, and wanna see the translated result
+    here we will craft/cook gpt :query by 00) combine all examples, 01) add new :prompt attheend
+    
+    then, we call openai endpoint to translate :query
+    ie openai.Completion.create(engine, prompt, ...otherparams)
+                               (      , prompt ie combined :query above  
+    '''
+
+    #region helper
+    def format_example(self, ex):
+        """Formats the input, output pair."""
+        return '' \
+            + self.input_prefix  + ex.get_input()  + self.input_suffix \
+            + self.output_prefix + ex.get_output() + self.output_suffix \
+            + ''
+
+    def get_prime_text(self):
+        """Formats all examples to prime the model."""
+        return ''.join([
+            self.format_example(ex)
+            for                 ex in self.examples.values()
+        ])
+    #endregion helper
+
     def craft_query(self, prompt):
         """Creates the query for the API request."""
-        q = self.get_prime_text(
-        ) + self.input_prefix + prompt + self.input_suffix
-        if self.append_output_prefix_to_query:
-            q = q + self.output_prefix
+        q =   self.get_prime_text() \
+            + self.input_prefix + prompt + self.input_suffix
+
+        if self.append_output_prefix_to_query: q = q + self.output_prefix
 
         return q
 
@@ -131,14 +152,9 @@ class GPT:
             stop        = self.stop,
         )
         return response
+    #endregion handle new gpt request
 
     def get_top_reply(self, prompt):
         """Obtains the best result as returned by the API."""
         response = self.submit_request(prompt)
         return response['choices'][0]['text']
-
-    def format_example(self, ex):
-        """Formats the input, output pair."""
-        return self.input_prefix + ex.get_input(
-        ) + self.input_suffix + self.output_prefix + ex.get_output(
-        ) + self.output_suffix
