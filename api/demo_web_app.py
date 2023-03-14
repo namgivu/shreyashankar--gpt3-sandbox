@@ -3,7 +3,6 @@
 from http import HTTPStatus
 import json
 import subprocess
-import openai
 
 from flask import Flask, request, Response
 
