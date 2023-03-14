@@ -25,6 +25,9 @@ def demo_web_app(gpt, config=UIConfig()):
     #             (           KEY_NAME openai secret defined in openai.cfg at this key/envvar/varname)
     #endregion set openai secret
 
+
+    #region flask apiapp endpoint(s)
+
     @app.route("/params", methods=["GET"])
     def get_params():
         # pylint: disable=unused-variable
@@ -109,6 +112,9 @@ def demo_web_app(gpt, config=UIConfig()):
             offset = len(gpt.output_prefix)
         return {'text': response['choices'][0]['text'][offset:]}
 
-    subprocess.Popen(["yarn", "start"])
+    #endregion flask apiapp endpoint(s)
 
-    app.run()
+
+    subprocess.Popen(["yarn", "start"])  # start reactjs webapp
+
+    app.run()  # start flask apiapp
